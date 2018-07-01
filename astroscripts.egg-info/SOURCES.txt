@@ -1,0 +1,10 @@
+README.md
+setup.py
+astroscripts/__init__.py
+astroscripts/customplots.py
+astroscripts/photometry.py
+astroscripts.egg-info/PKG-INFO
+astroscripts.egg-info/SOURCES.txt
+astroscripts.egg-info/dependency_links.txt
+astroscripts.egg-info/not-zip-safe
+astroscripts.egg-info/top_level.txt
