@@ -78,14 +78,12 @@ class CCD(object):
         amp = np.max(counts)/2.
         cen = np.mean(rows)
         sigma = 1.
-        wid = sigma
 
-        
-        def gaussian(x, amp, cen, wid):
+        def gaussian(x, amp, cen, sigma):
             '''
             gaussian PSF
             '''
-            return amp * np.exp(-(x-cen)**2 /wid**2)
+            return amp * np.exp(-(x-cen)**2 /sigma**2)
     
         def pvoigt(x, amp, cen, sigma, W, B):
             '''
