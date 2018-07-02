@@ -72,7 +72,7 @@ class CCD(object):
      # PSF Fitting
         '''
         Fitting a PSF model to a column choosing between the Gaussian or pseudo-Voigt profile.
-        '''
+        ''' 
         counts = self.data[int(center[1]),int(center[0]-delta):int(center[0]+delta)]
         rows = np.arange(0,len(counts),1)
         amp = np.max(counts)/2.

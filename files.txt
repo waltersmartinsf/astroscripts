@@ -1,9 +1,5 @@
 /Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/astroscripts.py
 /Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/__init__.py
-/Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/customplots.py
-/Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/photometry.py
-/Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/__pycache__/customplots.cpython-36.pyc
-/Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/__pycache__/photometry.cpython-36.pyc
 /Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/__pycache__/astroscripts.cpython-36.pyc
 /Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/astroscripts/__pycache__/__init__.cpython-36.pyc
 /Users/walter/anaconda3/lib/python3.6/site-packages/astroscripts-0.0.2-py3.6.egg/EGG-INFO/PKG-INFO
