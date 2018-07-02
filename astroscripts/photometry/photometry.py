@@ -78,12 +78,14 @@ class CCD(object):
         amp = np.max(counts)/2.
         cen = np.mean(rows)
         sigma = 1.
+        wid = sigma
 
-        def gaussian(x, amp, cen, sigma):
+        
+        def gaussian(x, amp, cen, wid):
             '''
             gaussian PSF
             '''
-            return amp * np.exp(-(x-cen)**2 /sigma**2)
+            return amp * np.exp(-(x-cen)**2 /wid**2)
     
         def pvoigt(x, amp, cen, sigma, W, B):
             '''
@@ -94,7 +96,7 @@ class CCD(object):
 
         if model == 'gaussian':
             gmodel = lmfit.Model(gaussian)
-            result = gmodel.fit(counts, x=rows, amp=amp, cen=cen, wid=wid)
+            result = gmodel.fit(counts, x=rows, amp=amp, cen=cen, sigma=sigma)
         
         if model == 'pVoigt':
             gmodel = lmfit.Model(pvoigt)
