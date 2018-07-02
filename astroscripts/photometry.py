@@ -111,13 +111,16 @@ class CCD(object):
             if save == True:
                 plt.savefig('fit_psf.png')
 
-        return result
+        self.fwhm   = 2*np.sqrt(2*np.log(2))*result.best_values['sigma']
+        self.fwhm_err = abs(2*np.sqrt(2*np.log(2)))*result.params['sigma'].stderr
+        self.psf_fit = result
 
-    def fwhm(self,sigma):
+    def fwhm(self,center, delta=10.):
         """
         Obtain the Full-width Half-maximum from a point spread function estimate from the fit-routine.
         """
-        return self.result['']
+        result = self.fit(self, center, delta=delta, model='gaussian',show=False, save=False)
+        return 
 
     def background(self,sky,window=100):
         sky_mean = float(np.median(self.data[int(sky[1]-window):int(sky[1]+window),int(sky[0]-window):int(sky[0]+window)]))
