@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='astroscripts',
-      version='0.0.1',
+      version='0.0.2',
       description='Personal library to work with astronomical data analysis',
       url='https://github.com/waltersmartinsf/astroscripts',
       author='Walter Silva Martins Filho',

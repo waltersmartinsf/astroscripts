@@ -68,7 +68,7 @@ class CCD(object):
         sources = daofind(self.data - median)
         return sources
 
-    def fit(self, center, delta=10., model='gaussian',show=False):
+    def fit(self, center, delta=10., model='gaussian',show=False, save=False):
      # PSF Fitting
         '''
         Fitting a PSF model to a column choosing between the Gaussian or pseudo-Voigt profile.
@@ -102,6 +102,13 @@ class CCD(object):
 
         if show == True:
             print(result.fit_report())
+            plt.figure()
+            plt.scatter(rows,counts,color='red')
+            plt.plot(rows,result.init_fit, 'k--',label='init fit')
+            plt.plot(rows,result.best_fit, 'r-',label='best fit')
+            plt.legend()
+            if save == True:
+                plt.savefig('fit_psf.png')
 
         return result
 
