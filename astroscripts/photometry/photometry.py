@@ -8,6 +8,7 @@ import numpy as np
 from astropy.io import fits
 import lmfit
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from photutils import CircularAperture
 from photutils import aperture_photometry
