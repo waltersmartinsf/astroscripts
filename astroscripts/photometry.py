@@ -138,6 +138,7 @@ class CCD(object):
         return bkg, bkg_counts, bkg_mean
 
     def aperture(self,positions,bkg=None,radius=3.):
+        from astropy.table import Table
 
         # flux, eflux = [], []
 
@@ -156,7 +157,7 @@ class CCD(object):
         # data_flux = pd.concat(frames,axis=1)
         # data_flux.columns = ['flux','eflux']
 
-        return phot_table
+        return Table(phot_table)
 
     def airmass(self):
         if 'airmass' in self.header:
