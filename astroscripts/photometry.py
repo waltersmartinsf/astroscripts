@@ -139,7 +139,7 @@ class CCD(object):
 
     def aperture(self,positions,bkg=None,radius=3.):
 
-        flux, eflux = [], []
+        # flux, eflux = [], []
 
         apertures = CircularAperture(positions, r=radius)
         
@@ -148,15 +148,15 @@ class CCD(object):
 
         phot_table = aperture_photometry(self.data, apertures, error=bkg)
 
-        for i in range(len(positions)):
-            flux.append(phot_table['aperture_sum'][i])
-            eflux.append(phot_table['aperture_sum_err'][i])
+        # for i in range(len(positions)):
+        #     flux.append(phot_table['aperture_sum'][i])
+        #     eflux.append(phot_table['aperture_sum_err'][i])
 
-        frames = [pd.DataFrame(flux).T, pd.DataFrame(eflux).T]
-        data_flux = pd.concat(frames,axis=1)
+        # frames = [pd.DataFrame(flux).T, pd.DataFrame(eflux).T]
+        # data_flux = pd.concat(frames,axis=1)
         # data_flux.columns = ['flux','eflux']
 
-        return data_flux
+        return phot_table
 
     def airmass(self):
         if 'airmass' in self.header:
