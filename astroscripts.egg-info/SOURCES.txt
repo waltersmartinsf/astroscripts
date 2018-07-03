@@ -1,6 +1,7 @@
 README.md
 setup.py
 astroscripts/__init__.py
+astroscripts/coordinates.py
 astroscripts/customplots.py
 astroscripts/lightcurve.py
 astroscripts/mlstats.py

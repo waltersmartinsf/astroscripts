@@ -34,9 +34,9 @@ class CCD(object):
         array and Python list.
         """
         self.image_path =  image_path
-        self.data = fits.getdata(image_path)
+        self.data,self.header = fits.getdata(image_path,header=True)
         self.data = self.data.astype(np.float64)
-        self.header = fits.getheader(image_path)
+        #self.header = fits.getheader(image_path)
 
     def centroid(self, guess_center, delta=10.):
         img = self.data[int(guess_center[1]-delta):int(guess_center[1]+delta),int(guess_center[0]-delta):int(guess_center[0]+delta)]
@@ -52,7 +52,8 @@ class CCD(object):
         else:
             new_Y = int(guess_center[1] + (center[1]-delta))
 
-        return new_X, new_Y
+        self.xcentroid
+        self.ycentroid
 
 
 
