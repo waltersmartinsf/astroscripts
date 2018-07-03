@@ -72,7 +72,7 @@ def A4init_plotting():
     plt.rcParams['axes.linewidth'] = 1
 
 def FoV_plot(img,sources,label_xcentroid ='xcentroid',label_ycentroid='ycentroid',figsize=(14,9),
-            plot_max_sources=False,n_max_sources=2,save=True,s=14,show=False):
+            plot_max_sources=False,n_max_sources=2,save=True,s=14,show=False,plot_name='FoV_sources.png'):
     
     norm = ImageNormalize(stretch=SqrtStretch())
     sources_max = sources.sort_values('flux',ascending= False)[:n_max_sources]
@@ -86,6 +86,6 @@ def FoV_plot(img,sources,label_xcentroid ='xcentroid',label_ycentroid='ycentroid
     plt.xlim(0,img.shape[1])
     plt.ylim(0,img.shape[0])
     if save == True:
-        plt.savefig('FoV_sources.png')
+        plt.savefig(plot_name)
     if show == False:
         plt.close()

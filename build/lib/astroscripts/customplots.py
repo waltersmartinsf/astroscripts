@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import numpy as np
 
+from astropy.visualization import SqrtStretch
+from astropy.visualization.mpl_normalize import ImageNormalize
+
 def init_plotting(x=14,y=9):
     plt.rcParams['figure.figsize'] = (x,y)
     plt.rcParams['font.size'] = 20
@@ -67,3 +70,22 @@ def A4init_plotting():
     plt.rcParams['legend.frameon'] = True
     plt.rcParams['legend.loc'] = 'best'
     plt.rcParams['axes.linewidth'] = 1
+
+def FoV_plot(img,sources,label_xcentroid ='xcentroid',label_ycentroid='ycentroid',figsize=(14,9),
+            plot_max_sources=False,n_max_sources=2,save=True,s=14,show=False,plot_name='FoV_sources.png'):
+    
+    norm = ImageNormalize(stretch=SqrtStretch())
+    sources_max = sources.sort_values('flux',ascending= False)[:n_max_sources]
+
+    plt.figure(figsize=figsize)
+    plt.imshow(img,cmap='Greys', origin='lower', norm=norm, vmax=np.median(img)+2.5*np.std(img))
+    plt.colorbar(label='# counts')
+    plt.scatter(sources[label_xcentroid],sources[label_ycentroid],color='red',s=s)
+    if plot_max_sources == True:
+        plt.scatter(sources_max[label_xcentroid],sources_max[label_ycentroid],color='purple',s=s)
+    plt.xlim(0,img.shape[1])
+    plt.ylim(0,img.shape[0])
+    if save == True:
+        plt.savefig(plot_name)
+    if show == False:
+        plt.close()

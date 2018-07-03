@@ -81,3 +81,7 @@ def update_progress(progress):
     text = "\rPercent: [{0}] {1}% {2}".format( "#"*block + "-"*(barLength-block), round(progress*100,3), status)
     sys.stdout.write(text)
     sys.stdout.flush()
+
+def exist_dir(dir):
+    if not os.path.exists(dir):
+        os.mkdir(dir)
