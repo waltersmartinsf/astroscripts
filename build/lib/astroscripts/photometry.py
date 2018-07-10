@@ -52,8 +52,8 @@ class CCD(object):
         else:
             new_Y = int(guess_center[1] + (center[1]-delta))
 
-        self.xcentroid
-        self.ycentroid
+        self.xcentroid = new_X
+        self.ycentroid = new_Y
 
 
 
