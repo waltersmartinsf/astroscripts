@@ -42,15 +42,8 @@ class CCD(object):
         img = self.data[int(guess_center[1]-delta):int(guess_center[1]+delta),int(guess_center[0]-delta):int(guess_center[0]+delta)]
         center = np.unravel_index(np.argmax(img), img.shape)
 
-        if center[0] < delta:
-            new_X = int(guess_center[0] - (delta - center[0]))
-        else:
-            new_X = int(guess_center[0] + (center[0]-delta))
-
-        if center[1] < delta:
-            new_Y = int(guess_center[1] - (delta - center[1]))
-        else:
-            new_Y = int(guess_center[1] + (center[1]-delta))
+        new_Y = guess_center[1] - delta + center[0]
+        new_X = guess_center[0] - delta + center[1]
 
         self.xcentroid = new_X
         self.ycentroid = new_Y
@@ -70,7 +63,7 @@ class CCD(object):
         sources = daofind(self.data - median)
         return sources
 
-    def fit(self, center, delta=10., model='gaussian',show=False, save=False):
+    def fit(self, center, delta=10., B=100, model='gaussian',show=False, save=False):
      # PSF Fitting
         '''
         Fitting a PSF model to a column choosing between the Gaussian or pseudo-Voigt profile.
@@ -81,11 +74,11 @@ class CCD(object):
         cen = np.mean(rows)
         sigma = 1.
 
-        def gaussian(x, amp, cen, sigma):
+        def gaussian(x, amp, cen, sigma,B):
             '''
             gaussian PSF
             '''
-            return amp * np.exp(-(x-cen)**2 /sigma**2)
+            return amp * np.exp(-(x-cen)**2 /sigma**2) + B
     
         def pvoigt(x, amp, cen, sigma, W, B):
             '''
@@ -96,7 +89,7 @@ class CCD(object):
 
         if model == 'gaussian':
             gmodel = lmfit.Model(gaussian)
-            result = gmodel.fit(counts, x=rows, amp=amp, cen=cen, sigma=sigma)
+            result = gmodel.fit(counts, x=rows, amp=amp, cen=cen, sigma=sigma,B=B)
         
         if model == 'pVoigt':
             gmodel = lmfit.Model(pvoigt)
@@ -115,13 +108,6 @@ class CCD(object):
         self.fwhm   = 2*np.sqrt(2*np.log(2))*result.best_values['sigma']
         self.fwhm_err = abs(2*np.sqrt(2*np.log(2)))*result.params['sigma'].stderr
         self.psf_fit = result
-
-    def fwhm(self,center, delta=10.):
-        """
-        Obtain the Full-width Half-maximum from a point spread function estimate from the fit-routine.
-        """
-        result = self.fit(self, center, delta=delta, model='gaussian',show=False, save=False)
-        return 
 
     def background(self,sky,window=100):
         sky_mean = float(np.median(self.data[int(sky[1]-window):int(sky[1]+window),int(sky[0]-window):int(sky[0]+window)]))
@@ -167,15 +153,15 @@ class CCD(object):
         
         #check the centroid
         X,Y = guess_center
-        sources = self.sources_field(sky=sky,fwhm=fwhm)
-        sources = sources.to_pandas()
-        center = sources[(sources['ycentroid'] < int(Y+delta)) & (sources['ycentroid'] > int(Y-delta)) 
-                         & (sources['xcentroid'] < int(X+delta)) & (sources['xcentroid'] > int(X-delta))]
-        positions = (float(center['xcentroid']),float(center['ycentroid']))
-        
+        # sources = self.sources_field(sky=sky,fwhm=fwhm)
+        # sources = sources.to_pandas()
+        # center = sources[(sources['ycentroid'] < int(Y+delta)) & (sources['ycentroid'] > int(Y-delta)) 
+        #                  & (sources['xcentroid'] < int(X+delta)) & (sources['xcentroid'] > int(X-delta))]
+        # positions = (float(center['xcentroid']),float(center['ycentroid']))
+        positions = (X,Y)
         bkg, bkg_counts, bkg_mean = self.annulus_background(positions,radius=radius)
         counts = self.aperture([positions],bkg,radius=radius)
-        counts.columns = ['flux','eflux']
+        # counts.columns = ['flux','eflux']
         
         #HEADER Information
         if exp_time is None:
@@ -206,6 +192,7 @@ class CCD(object):
                 NR2 =  np.mean(NR2_partial)**2
 
         n_pix = np.pi * radius**2
-        flux = float(counts['flux'])
+        # flux = float(counts['flux'])
+        flux = float(counts['aperture_sum'])
         SN = flux/np.sqrt(flux+(n_pix*bkg_mean)+exp_time*(1.*n_pix*ND/gain)+(1.*n_pix*NR2/gain**2))
-        return SN
+        return SN #, counts
